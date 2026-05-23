@@ -63,11 +63,8 @@ services:
       # Virtual key is REQUIRED — no fallback to master key
       - OPENAI_API_KEY=${LITELLM_VIRTUAL_KEY:?Set LITELLM_VIRTUAL_KEY in .env}
       - OPENAI_BASE_URL=http://litellm:4000
-      # --- Named virtual keys (available for -e overrides at runtime) ---
-      - LITELLM_VKEY_FULL=${LITELLM_VKEY_FULL:-}
-      - LITELLM_VKEY_BUDGET=${LITELLM_VKEY_BUDGET:-}
-      - LITELLM_VKEY_CODING=${LITELLM_VKEY_CODING:-}
-      - LITELLM_VKEY_READONLY=${LITELLM_VKEY_READONLY:-}
+      # --- Override the key at runtime: ---
+      #   docker compose run --rm -e OPENAI_API_KEY=sk-other-key pi-sandbox
     deploy:
       resources:
         limits:
