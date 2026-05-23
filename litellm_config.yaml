@@ -6,53 +6,62 @@ model_list:
   - model_name: claude-sonnet
     litellm_params:
       model: anthropic/claude-sonnet-4-20250514
+      api_key: os.environ/ANTHROPIC_API_KEY
+
   - model_name: claude-haiku
     litellm_params:
       model: anthropic/claude-haiku-4-20250414
+      api_key: os.environ/ANTHROPIC_API_KEY
 
   # ── OpenAI ─────────────────────────────────────────────
   - model_name: gpt-4.1
     litellm_params:
       model: openai/gpt-4.1
+      api_key: os.environ/OPENAI_API_KEY
+
   - model_name: gpt-4.1-mini
     litellm_params:
       model: openai/gpt-4.1-mini
+      api_key: os.environ/OPENAI_API_KEY
+
   - model_name: o3
     litellm_params:
       model: openai/o3
+      api_key: os.environ/OPENAI_API_KEY
 
   # ── Google ─────────────────────────────────────────────
   - model_name: gemini-2.5-pro
     litellm_params:
       model: gemini/gemini-2.5-pro
+      api_key: os.environ/GOOGLE_API_KEY
+
   - model_name: gemini-2.5-flash
     litellm_params:
       model: gemini/gemini-2.5-flash
+      api_key: os.environ/GOOGLE_API_KEY
 
   # ── Groq (fast inference) ──────────────────────────────
   - model_name: llama-4-maverick
     litellm_params:
       model: groq/llama-4-maverick-17b-128e-instruct
+      api_key: os.environ/GROQ_API_KEY
 
   # ── xAI ────────────────────────────────────────────────
   - model_name: grok-3
     litellm_params:
       model: xai/grok-3
+      api_key: os.environ/XAI_API_KEY
 
   # ── Mistral ────────────────────────────────────────────
   - model_name: mistral-large
     litellm_params:
       model: mistral/mistral-large-latest
+      api_key: os.environ/MISTRAL_API_KEY
 
 # ── General settings ─────────────────────────────────────
 general_settings:
-  # Only allow the master key for auth
   drop_params: true
 
 litellm_settings:
-  # Fallbacks if a provider is down
-  # fallbacks:
-  #   - claude-sonnet: [gpt-4.1, gemini-2.5-pro]
-  # Number of retries on failure
   num_retries: 3
   request_timeout: 120

@@ -13,20 +13,20 @@ services:
       - ./litellm_config.yaml:/app/config.yaml:ro
     environment:
       - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:?Set LITELLM_MASTER_KEY in .env}
-      # --- Provider keys passed through to litellm ---
+      # --- Provider keys (only visible inside litellm, NOT passed to pi-sandbox) ---
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
       - GROQ_API_KEY=${GROQ_API_KEY:-}
       - XAI_API_KEY=${XAI_API_KEY:-}
       - MISTRAL_API_KEY=${MISTRAL_API_KEY:-}
-      # Database for persisting usage / api keys (optional but recommended)
+      # Database for persisting virtual keys, usage, spend
       - DATABASE_URL=${LITELLM_DATABASE_URL:-}
       - STORE_MODEL_IN_DB=True
     command: ["--config", "/app/config.yaml", "--port", "4000"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
-      interval: 30s
+      interval: 15s
       timeout: 10s
       retries: 5
       start_period: 30s
@@ -45,30 +45,23 @@ services:
       dockerfile: Dockerfile
     container_name: pi-sandbox
     hostname: pi-sandbox
-    # Keep container running interactively
     stdin_open: true
     tty: true
-    # Wait for litellm to be healthy before starting
     depends_on:
       litellm:
         condition: service_healthy
-    # Map your code directory into the container
     volumes:
       - /home/sheigl/code:/workspace:cached
-      # Persist Pi config across restarts
       - pi-config:/home/dev/.pi
-      # Persist Node modules cache for faster reinstalls
       - pi-node-modules:/home/dev/.npm
-    # Run as your UID to avoid permission issues with mounted files
     user: "${UID:-1000}:${GID:-1000}"
     working_dir: /workspace
     environment:
       - HOME=/home/dev
       - NODE_ENV=development
-      # --- Route all LLM calls through litellm proxy ---
-      - OPENAI_API_KEY=${LITELLM_MASTER_KEY}
+      # --- Route all LLM calls through litellm proxy using a virtual key ---
+      - OPENAI_API_KEY=${LITELLM_VIRTUAL_KEY:?Set LITELLM_VIRTUAL_KEY in .env (run setup-keys.sh first)}
       - OPENAI_BASE_URL=http://litellm:4000
-    # Resource limits for sandbox safety
     deploy:
       resources:
         limits:

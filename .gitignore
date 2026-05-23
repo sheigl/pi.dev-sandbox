@@ -1,16 +1,2 @@
-# Environment variables (contains API keys — never commit)
-.env
-
-# Docker volumes data
-data/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Editor files
-*.swp
-*.swo
-*~
-.vscode/
-.idea/
+# .env
+.env.example
