@@ -1,0 +1,58 @@
+# litellm_config.yaml — LiteLLM Proxy configuration
+# Docs: https://docs.litellm.ai/docs/proxy/configs
+
+model_list:
+  # ── Anthropic ──────────────────────────────────────────
+  - model_name: claude-sonnet
+    litellm_params:
+      model: anthropic/claude-sonnet-4-20250514
+  - model_name: claude-haiku
+    litellm_params:
+      model: anthropic/claude-haiku-4-20250414
+
+  # ── OpenAI ─────────────────────────────────────────────
+  - model_name: gpt-4.1
+    litellm_params:
+      model: openai/gpt-4.1
+  - model_name: gpt-4.1-mini
+    litellm_params:
+      model: openai/gpt-4.1-mini
+  - model_name: o3
+    litellm_params:
+      model: openai/o3
+
+  # ── Google ─────────────────────────────────────────────
+  - model_name: gemini-2.5-pro
+    litellm_params:
+      model: gemini/gemini-2.5-pro
+  - model_name: gemini-2.5-flash
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+
+  # ── Groq (fast inference) ──────────────────────────────
+  - model_name: llama-4-maverick
+    litellm_params:
+      model: groq/llama-4-maverick-17b-128e-instruct
+
+  # ── xAI ────────────────────────────────────────────────
+  - model_name: grok-3
+    litellm_params:
+      model: xai/grok-3
+
+  # ── Mistral ────────────────────────────────────────────
+  - model_name: mistral-large
+    litellm_params:
+      model: mistral/mistral-large-latest
+
+# ── General settings ─────────────────────────────────────
+general_settings:
+  # Only allow the master key for auth
+  drop_params: true
+
+litellm_settings:
+  # Fallbacks if a provider is down
+  # fallbacks:
+  #   - claude-sonnet: [gpt-4.1, gemini-2.5-pro]
+  # Number of retries on failure
+  num_retries: 3
+  request_timeout: 120

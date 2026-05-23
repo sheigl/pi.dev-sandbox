@@ -36,5 +36,15 @@ USER dev
 
 WORKDIR /workspace
 
+RUN mkdir -p /home/dev/.pi && chown dev:dev /home/dev/.pi
+
+# Drop in a Pi SYSTEM.md that tells Pi to use the litellm proxy
+USER dev
+RUN printf '%s\n' \
+    'You are running inside a Docker sandbox connected to a LiteLLM proxy.' \
+    'All OpenAI-compatible requests are routed through http://litellm:4000.' \
+    'Models available are defined in litellm_config.yaml on the host.' \
+    > /home/dev/.pi/SYSTEM.md
+
 ENTRYPOINT ["pi"]
 CMD ["--help"]
