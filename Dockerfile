@@ -36,14 +36,8 @@ USER dev
 
 WORKDIR /workspace
 
-# Drop in Pi config pointing to litellm proxy
-RUN mkdir -p /home/dev/.pi
-RUN printf '%s\n' \
-    'You are running inside a Docker sandbox connected to a LiteLLM proxy.' \
-    'All OpenAI-compatible requests are routed through http://litellm:4000.' \
-    'You authenticate using a virtual key — models available depend on which key is used.' \
-    'Models are defined in litellm_config.yaml on the host.' \
-    > /home/dev/.pi/SYSTEM.md
+# Pi config (.pi/) and npm cache are bind-mounted from ./data/ on the host.
+# models.json and SYSTEM.md live in data/pi/ — edit them there.
 
 ENTRYPOINT ["pi"]
 CMD ["--help"]

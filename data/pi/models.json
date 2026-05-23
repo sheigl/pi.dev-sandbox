@@ -1,0 +1,62 @@
+{
+  "providers": {
+    "litellm": {
+      "name": "LiteLLM Proxy",
+      "type": "openai",
+      "baseURL": "http://litellm:4000/v1",
+      "apiKey": "env:OPENAI_API_KEY",
+      "models": [
+        {
+          "id": "claude-sonnet-4-20250514",
+          "name": "Claude Sonnet 4",
+          "displayName": "Claude Sonnet 4"
+        },
+        {
+          "id": "claude-haiku-4-20250414",
+          "name": "Claude Haiku 4",
+          "displayName": "Claude Haiku 4"
+        },
+        {
+          "id": "gpt-4.1",
+          "name": "GPT-4.1",
+          "displayName": "GPT-4.1"
+        },
+        {
+          "id": "gpt-4.1-mini",
+          "name": "GPT-4.1 Mini",
+          "displayName": "GPT-4.1 Mini"
+        },
+        {
+          "id": "o3",
+          "name": "o3",
+          "displayName": "o3"
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "name": "Gemini 2.5 Pro",
+          "displayName": "Gemini 2.5 Pro"
+        },
+        {
+          "id": "gemini-2.5-flash",
+          "name": "Gemini 2.5 Flash",
+          "displayName": "Gemini 2.5 Flash"
+        },
+        {
+          "id": "llama-4-maverick-17b-128e-instruct",
+          "name": "Llama 4 Maverick",
+          "displayName": "Llama 4 Maverick"
+        },
+        {
+          "id": "grok-3",
+          "name": "Grok 3",
+          "displayName": "Grok 3"
+        },
+        {
+          "id": "mistral-large-latest",
+          "name": "Mistral Large",
+          "displayName": "Mistral Large"
+        }
+      ]
+    }
+  }
+}

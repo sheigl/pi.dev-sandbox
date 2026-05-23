@@ -1,1 +1,20 @@
+# Secrets
 .env
+
+# Pi data (sessions, config, cache) — persisted on host via bind mount
+# but we don't want session history in git
+data/pi/sessions/
+data/pi/cache/
+data/pi/agent/
+
+# Node modules cache (bind-mounted, not tracked)
+data/npm/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
