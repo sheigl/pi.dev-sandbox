@@ -60,7 +60,8 @@ services:
       - HOME=/home/dev
       - NODE_ENV=development
       # --- Route all LLM calls through litellm proxy ---
-      - OPENAI_API_KEY=${LITELLM_VIRTUAL_KEY:-${LITELLM_MASTER_KEY}}
+      # Virtual key is REQUIRED — no fallback to master key
+      - OPENAI_API_KEY=${LITELLM_VIRTUAL_KEY:?Set LITELLM_VIRTUAL_KEY in .env}
       - OPENAI_BASE_URL=http://litellm:4000
       # --- Named virtual keys (available for -e overrides at runtime) ---
       - LITELLM_VKEY_FULL=${LITELLM_VKEY_FULL:-}
