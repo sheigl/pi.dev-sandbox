@@ -57,8 +57,14 @@ services:
       - HOME=/home/dev
       - NODE_ENV=development
       # --- Route all LLM calls through litellm proxy using a virtual key ---
-      - OPENAI_API_KEY=${LITELLM_VIRTUAL_KEY:?Set LITELLM_VIRTUAL_KEY in .env}
+      # Default key — override at runtime with: docker compose run --rm -e OPENAI_API_KEY=$KEY_NAME pi-sandbox
+      - OPENAI_API_KEY=${LITELLM_VIRTUAL_KEY:-${LITELLM_MASTER_KEY}}
       - OPENAI_BASE_URL=http://litellm:4000
+      # --- Named virtual keys (available for -e overrides) ---
+      - LITELLM_VKEY_FULL=${LITELLM_VKEY_FULL:-}
+      - LITELLM_VKEY_BUDGET=${LITELLM_VKEY_BUDGET:-}
+      - LITELLM_VKEY_CODING=${LITELLM_VKEY_CODING:-}
+      - LITELLM_VKEY_READONLY=${LITELLM_VKEY_READONLY:-}
     deploy:
       resources:
         limits:
