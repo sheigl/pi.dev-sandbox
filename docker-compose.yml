@@ -1,0 +1,46 @@
+# docker-compose.yml
+version: "3.9"
+
+services:
+  pi-sandbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pi-sandbox
+    hostname: pi-sandbox
+    # Keep container running interactively
+    stdin_open: true
+    tty: true
+    # Map your code directory into the container
+    volumes:
+      - /home/sheigl/code:/workspace:cached
+      # Persist Pi config across restarts
+      - pi-config:/home/dev/.pi
+      # Persist Node modules cache for faster reinstalls
+      - pi-node-modules:/home/dev/.npm
+    # Run as your UID to avoid permission issues with mounted files
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /workspace
+    environment:
+      - HOME=/home/dev
+      - NODE_ENV=development
+      # --- LLM Provider Keys (uncomment/replace as needed) ---
+      # - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      # - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      # - GROQ_API_KEY=${GROQ_API_KEY}
+      # - XAI_API_KEY=${XAI_API_KEY}
+      # - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+    # Resource limits for sandbox safety
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 8G
+        reservations:
+          cpus: "2.0"
+          memory: 4G
+
+volumes:
+  pi-config:
+  pi-node-modules:
